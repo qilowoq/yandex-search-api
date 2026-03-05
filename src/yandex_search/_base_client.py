@@ -260,6 +260,66 @@ class _BaseClient:
             return html
         return html[start : end_idx + len(end_tag)].strip()
 
+    _NOISE_TAGS = ("script", "style", "noscript", "iframe", "svg")
+
+    @staticmethod
+    def _strip_noise_tags(html: str) -> str:
+        """Remove script, style, noscript, iframe, svg and their content."""
+        try:
+            from lxml import html as lxml_html
+
+            doc = lxml_html.fromstring(html)
+            for tag in _BaseClient._NOISE_TAGS:
+                for el in list(doc.iter(tag)):
+                    el.drop_tree()  # type: ignore[union-attr]
+            html = lxml_html.tostring(
+                doc, encoding="unicode", method="html"
+            )
+        except Exception:
+            pass
+        # Always run regex strip (handles edge cases and fallback when lxml fails)
+        for tag in _BaseClient._NOISE_TAGS:
+            html = re.sub(
+                rf"<{tag}[^>]*>.*?</{tag}>",
+                "",
+                html,
+                flags=re.DOTALL | re.IGNORECASE,
+            )
+        return html
+
+    @staticmethod
+    def _clean_markdown(md_text: str) -> str:
+        """Remove leftover noise (script/config/CSS snippets) and collapse newlines."""
+        lines = md_text.split("\n")
+        out: list[str] = []
+        skip_patterns = (
+            r"^\s*\(\(\)\s*=>",  # (() =>
+            r"^\s*var\s+\w+\s*=",  # var x =
+            r"function\s*\(",  # function(
+            r"\.push\s*\(",  # .push(
+            r"freestar\.",  # freestar
+            r"dataLayer\.push",  # dataLayer
+            r"gtag\s*\(",  # gtag(
+            r"window\.dataLayer",  # dataLayer
+            r"^\s*\);?\s*$",  # ); alone
+            r"^\s*\}\s*\)\s*\(\s*\)",  # })();
+            r"[\w.]+\s*=\s*[\w.]+\s*\|\|\s*\{\}",  # x = x || {}
+            r"@media\s+screen",  # @media CSS
+            r"^\s*[.#]?[\w-]+\s*\{",  # CSS selector {
+            r"data:image/[^;]+;base64,",  # inline base64 images
+        )
+        compiled = [re.compile(p) for p in skip_patterns]
+        for line in lines:
+            if any(p.search(line) for p in compiled):
+                continue
+            stripped = line.strip()
+            if not stripped:
+                if out and out[-1].strip() == "":
+                    continue
+            out.append(line)
+        text = re.sub(r"\n{3,}", "\n\n", "\n".join(out))
+        return text.strip()
+
     @staticmethod
     def _convert_html(
         html: str,
@@ -269,14 +329,20 @@ class _BaseClient:
             content_format = ContentFormat(content_format.lower())
 
         html = _BaseClient._strip_yandex_cache_wrapper(html)
+        html = _BaseClient._strip_noise_tags(html)
 
         if content_format == ContentFormat.HTML:
             return html
         if content_format == ContentFormat.TEXT:
             text = re.sub(r"<[^>]+>", "", html)
             return re.sub(r"\n{3,}", "\n\n", text).strip()
-        # markdown
-        return md(html, strip=["script", "style"]).strip()
+        # markdown (ATX headings: # not underlines)
+        result = md(
+            html,
+            strip=list(_BaseClient._NOISE_TAGS),
+            heading_style="ATX",
+        ).strip()
+        return _BaseClient._clean_markdown(result)
 
     # --- Error handling ---
 

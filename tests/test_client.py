@@ -230,6 +230,13 @@ class TestErrorHandling:
 
 
 CACHED_HTML = "<html><body><h1>Title</h1><p>Hello <b>world</b></p></body></html>"
+CACHED_HTML_WITH_NOISE = """<html><body>
+<script>freestar.config.enabled_slots.push({ slotId: "x" });</script>
+<style>.nav { display: flex; }</style>
+<h1>Title</h1>
+<p>Hello <b>world</b></p>
+<p>Real content here.</p>
+</body></html>"""
 CACHED_URL = "https://yandexwebcache.net/doc1"
 
 
@@ -280,3 +287,24 @@ class TestFetchCached:
             YandexSearchError, match="no saved_copy_url"
         ):
             client.fetch_cached(doc)
+
+    @respx.mock
+    def test_fetch_cached_markdown_strips_script_style(self):
+        respx.get(CACHED_URL).mock(
+            return_value=httpx.Response(200, text=CACHED_HTML_WITH_NOISE)
+        )
+        doc = Document(
+            url="https://example.com",
+            domain="example.com",
+            title="Test",
+            saved_copy_url=CACHED_URL,
+        )
+        with YandexSearch(api_key=API_KEY) as client:
+            result = client.fetch_cached(doc)
+        assert "Title" in result
+        assert "**world**" in result
+        assert "Real content here" in result
+        assert "freestar" not in result
+        assert "enabled_slots" not in result
+        assert ".nav" not in result
+        assert "display: flex" not in result
