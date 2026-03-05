@@ -122,9 +122,10 @@ pytest tests/ -v
 ```bash
 pip install -e ".[dev]"
 ruff check src/ tests/
+pylint src/
 pytest tests/ -v
 ```
 
 ## License
 
-See the LICENSE file in the repository.
+MIT License. See the [LICENSE](LICENSE) file in the repository.
