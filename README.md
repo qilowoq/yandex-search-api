@@ -22,7 +22,7 @@ pip install -e .
 
 ## Configuration
 
-1. Create a service account in [Yandex Cloud](https://console.cloud.yandex.ru/) and obtain an API key. Yandex Search API is available by default.
+1. Create a service account in [Yandex Cloud](https://console.cloud.yandex.ru/) and obtain an API key.
 2. Create API key.
 3. Set environment variables (or pass keys to the constructor):
 
