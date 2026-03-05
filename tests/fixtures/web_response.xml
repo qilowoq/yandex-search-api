@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<yandexsearch version="1.0">
+  <request>
+    <query>python dataclasses</query>
+    <page>0</page>
+    <sortby order="descending">rlv</sortby>
+    <maxpassages>2</maxpassages>
+    <groupings>
+      <groupby attr="d" mode="deep" groups-on-page="10" docs-in-group="1" />
+    </groupings>
+  </request>
+  <response date="20240315T120000">
+    <reqid>1234567890-abcdef</reqid>
+    <found priority="phrase">12345</found>
+    <found-human>found 12345 results</found-human>
+    <results>
+      <grouping attr="d" mode="deep" groups-on-page="10" docs-in-group="1">
+        <found priority="phrase">500</found>
+        <found-docs priority="phrase">2000</found-docs>
+        <page first="1" last="10">0</page>
+        <group>
+          <categ attr="d" name="docs.python.org" />
+          <doccount>42</doccount>
+          <doc id="doc1">
+            <url>https://docs.python.org/3/library/dataclasses.html</url>
+            <domain>docs.python.org</domain>
+            <title><hlword>Python</hlword> <hlword>dataclasses</hlword> module</title>
+            <headline>Official documentation for dataclasses</headline>
+            <modtime>20240301T000000</modtime>
+            <size>54321</size>
+            <charset>utf-8</charset>
+            <passages>
+              <passage>The <hlword>dataclasses</hlword> module provides a decorator and functions for creating classes.</passage>
+              <passage>Use <hlword>@dataclass</hlword> to automatically generate special methods.</passage>
+            </passages>
+            <properties>
+              <_PassagesType>0</_PassagesType>
+              <lang>en</lang>
+              <mime-type>text/html</mime-type>
+            </properties>
+            <saved-copy-url>https://yandexwebcache.net/doc1</saved-copy-url>
+          </doc>
+        </group>
+        <group>
+          <categ attr="d" name="realpython.com" />
+          <doccount>15</doccount>
+          <doc id="doc2">
+            <url>https://realpython.com/python-data-classes/</url>
+            <domain>realpython.com</domain>
+            <title><hlword>Python</hlword> Data Classes Tutorial</title>
+            <headline>Learn about data classes in Python 3.7+</headline>
+            <size>32000</size>
+            <charset>utf-8</charset>
+            <passages>
+              <passage>Data classes are a way to reduce boilerplate code in <hlword>Python</hlword>.</passage>
+            </passages>
+            <properties>
+              <lang>en</lang>
+              <mime-type>text/html</mime-type>
+            </properties>
+          </doc>
+        </group>
+      </grouping>
+    </results>
+  </response>
+</yandexsearch>

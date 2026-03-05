@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<yandexsearch version="1.0">
+  <request>
+    <query>cute cats</query>
+    <page>0</page>
+  </request>
+  <response date="20240315T120000">
+    <reqid>img-req-12345</reqid>
+    <found priority="phrase">99999</found>
+    <found-human>found 99999 images</found-human>
+    <results>
+      <grouping>
+        <found>5000</found>
+        <page first="1" last="20">0</page>
+        <group>
+          <doc id="img1">
+            <url>https://example.com/cats/page1</url>
+            <domain>example.com</domain>
+            <title>Cute <hlword>cats</hlword> photo gallery</title>
+            <image-link>https://example.com/images/cat1.jpg</image-link>
+            <thmb-href>https://im0-tub.yandex.net/i?id=cat1-thumb</thmb-href>
+            <thmb-w>200</thmb-w>
+            <thmb-h>150</thmb-h>
+            <size>245000</size>
+            <properties>
+              <mime-type>image/jpeg</mime-type>
+            </properties>
+          </doc>
+        </group>
+        <group>
+          <doc id="img2">
+            <url>https://example.org/gallery/cats</url>
+            <domain>example.org</domain>
+            <title>Best <hlword>cat</hlword> photos 2024</title>
+            <image-link>https://example.org/photos/cat2.png</image-link>
+            <thmb-href>https://im0-tub.yandex.net/i?id=cat2-thumb</thmb-href>
+            <thmb-w>300</thmb-w>
+            <thmb-h>300</thmb-h>
+            <size>512000</size>
+            <properties>
+              <mime-type>image/png</mime-type>
+            </properties>
+          </doc>
+        </group>
+      </grouping>
+    </results>
+  </response>
+</yandexsearch>

@@ -1,0 +1,34 @@
+{
+  "message": {
+    "content": "Python — это высокоуровневый язык программирования общего назначения.",
+    "role": "ROLE_ASSISTANT"
+  },
+  "sources": [
+    {
+      "url": "https://ru.wikipedia.org/wiki/Python",
+      "title": "Python — Википедия",
+      "used": true
+    },
+    {
+      "url": "https://docs.python.org/3/",
+      "title": "Python Documentation",
+      "used": true
+    },
+    {
+      "url": "https://example.com/python-intro",
+      "title": "Introduction to Python",
+      "used": false
+    }
+  ],
+  "searchQueries": [
+    {
+      "text": "что такое Python язык программирования",
+      "reqId": "sq-123"
+    }
+  ],
+  "fixedMisspellQuery": null,
+  "isAnswerRejected": false,
+  "isBulletAnswer": false,
+  "hints": ["история Python", "Python vs Java"],
+  "problematicAnswer": false
+}
