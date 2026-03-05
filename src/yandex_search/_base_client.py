@@ -358,9 +358,8 @@ class _BaseClient:
         exc_class = _STATUS_MAP.get(status_code)
         if exc_class is RateLimitError:
             raise RateLimitError(message)
-        elif exc_class:
+        if exc_class:
             raise exc_class(message)
-        elif status_code >= 500:
+        if status_code >= 500:
             raise ServerError(message)
-        else:
-            raise APIError(message, status_code=status_code, body=text)
+        raise APIError(message, status_code=status_code, body=text)

@@ -29,6 +29,7 @@ htmlcov/
 # Linting / type check
 .ruff_cache/
 .mypy_cache/
+.pylint_cache/
 .dmypy.json
 dmypy.json
 

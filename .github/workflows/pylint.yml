@@ -24,3 +24,5 @@ jobs:
 
       - name: Run Pylint
         run: pylint src/
+        env:
+          PYLINT_HOME: .pylint_cache
